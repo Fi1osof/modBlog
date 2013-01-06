@@ -1,0 +1,86 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    color: #333;
+    font-family: Arial;
+    font-size: 13px;
+}
+
+.block{
+    display: block;
+}
+
+.errors{
+    color: red;
+}
+
+div.blogWraper{
+    margin: 0 auto;
+    min-width: 1000px;
+    max-width: 1000px;
+}
+
+div.blogInner{
+    margin: 0 20px;
+}
+
+div.blogHeader{
+    min-height: 150px;
+    overflow: hidden;
+    padding: 10px 0 0;
+}
+    .blogHeader .blogTitle{
+        font-size: 16px;
+    }
+    
+    /* Login Block */
+    .blogHeader div.blogLoginBlock{
+        float: right;
+    }
+    /* End of Login Block */
+    
+    
+/* Modal Windows */   
+
+.blogModalOpener{
+    cursor:  pointer;
+}
+
+div.blogModalWindow{
+    position: absolute;
+    display: none;
+    z-index: 1000;
+    padding: 5px;
+    overflow: hidden;
+    background-color: #e0eff9;
+    border: 1px solid #DDD;
+}
+
+    
+    div.blogModalWindow .buttons {
+        margin: 20px 0;
+    }
+
+    div.blogModalWindow  .close {
+        border: 1px solid #CCCCCC;
+        cursor: pointer;
+        float: right;
+        height: 14px;
+        line-height: 14px;
+        text-align: center;
+        width: 14px;
+    }
+    
+    .blogModalWindow a.button{
+        border: 1px solid #CCCCCC;
+        color: #333333;
+        cursor: pointer;
+        font-weight: bold;
+        margin: 5px 20px;
+        padding: 1px 3px;
+        text-decoration: none;
+    }
+/* End of Modal Windows */

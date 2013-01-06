@@ -1,0 +1,26 @@
+.ADD{}
+    
+    .ADD .title{
+        margin: 0 0 20px;
+    }
+
+    .container.add{
+        background: none repeat scroll 0 0 #F8FBFE;
+        padding: 20px;
+    }
+    
+        .container.add small.note{
+
+        }
+        
+    .ADD .field{
+        margin: 15px 0;
+    }
+        
+.input-width-full{
+    width: 100%
+}
+
+.input-width-100{
+    width: 100px;
+}
