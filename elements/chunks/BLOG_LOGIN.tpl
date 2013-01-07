@@ -1,0 +1,1 @@
+<div class="blogLoginBlock">[[!Login@blogLogin?loginTpl=`BLOG_LgnLoginTpl`&logoutTpl=`BLOG_LgnLogoutTpl`]]</div>
