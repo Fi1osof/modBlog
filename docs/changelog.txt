@@ -1,3 +1,9 @@
+modBlog-1.1.0-beta
+=============================================================
+-   Added subCategory modBlog_Blog
+-   Added subCategory modBlog_Topic
+
+
 modBlog-1.0.0-beta
 =============================================================
 
