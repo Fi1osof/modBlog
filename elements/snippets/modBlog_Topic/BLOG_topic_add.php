@@ -4,16 +4,16 @@
  * Add new blog
  */
 
+
 if(!$modx->user->isAuthenticated($modx->context->key)){
     $modx->sendUnauthorizedPage();
 }
 
-$modx->regClientStartupScript($modx->getOption('modblog.template_url').'js/blog/add.js');
+$modx->regClientStartupScript($modx->getOption('modblog.template_url').'js/topic/add.js');
 $result = '';
 
 $TVsAliases = array(
     'BLOG_blogMinRating'    => 'blog_limit_rating_topic',
-    'BLOG_blogType'         => 'blog_type',
 );
 
 foreach($TVsAliases as $a => $f){
@@ -50,7 +50,7 @@ if(!empty($_POST['save_blog'])){
         'tv'.$BLOG_blogType->get('id') => $options['blog_type'],
     );
     
-    $response = $modx->modblog->runProcessor('blog/create', $properties);
+    $response = $modx->modblog->runProcessor('web/topic/create', $properties);
     
     if($response->isError()){
         
@@ -74,6 +74,6 @@ if(!empty($_POST['save_blog'])){
 
 $modx->setPlaceholder('blogData', $_POST);
 
-$result = $modx->getChunk('BLOG_add_blog_tpl',  $options);
+$result = $modx->getChunk('BLOG_add_topic_tpl',  $options);
 
 return $result;

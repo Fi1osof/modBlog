@@ -50,7 +50,7 @@ if(!empty($_POST['save_blog'])){
         'tv'.$BLOG_blogType->get('id') => $options['blog_type'],
     );
     
-    $response = $modx->modblog->runProcessor('blog/create', $properties);
+    $response = $modx->modblog->runProcessor('web/blog/create', $properties);
     
     if($response->isError()){
         
