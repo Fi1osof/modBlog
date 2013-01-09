@@ -202,7 +202,7 @@ $attr = array(
     xPDOTransport::PRESERVE_KEYS => false,
     xPDOTransport::UPDATE_OBJECT => true,
     xPDOTransport::RELATED_OBJECTS => true,
-    xPDOTransport::ABORT_INSTALL_ON_VEHICLE_FAIL => true,
+    xPDOTransport::ABORT_INSTALL_ON_VEHICLE_FAIL => false,
     xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
         'Snippets' => array(
             xPDOTransport::PRESERVE_KEYS => false,
@@ -239,6 +239,37 @@ $attr = array(
                     xPDOTransport::PRESERVE_KEYS => false,
                     xPDOTransport::UPDATE_OBJECT => false,
                     xPDOTransport::UNIQUE_KEY => 'name',
+                ),
+            ),
+        ),
+        'Children' => array(
+            xPDOTransport::PRESERVE_KEYS => false,
+            xPDOTransport::UPDATE_OBJECT => false,
+            xPDOTransport::UNIQUE_KEY => 'category',
+            xPDOTransport::RELATED_OBJECTS => true,
+            xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
+                'Snippets' => array(
+                    xPDOTransport::PRESERVE_KEYS => false,
+                    xPDOTransport::UPDATE_OBJECT => true,
+                    xPDOTransport::UNIQUE_KEY => 'name',
+                ),
+                'Chunks' => array(
+                    xPDOTransport::PRESERVE_KEYS => false,
+                    xPDOTransport::UPDATE_OBJECT => true,
+                    xPDOTransport::UNIQUE_KEY => 'name',
+                ),
+                'TemplateVars' => array(
+                    xPDOTransport::PRESERVE_KEYS => false,
+                    xPDOTransport::UPDATE_OBJECT => true,
+                    xPDOTransport::UNIQUE_KEY => 'name',
+                    xPDOTransport::RELATED_OBJECTS => true,
+                    xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
+                        'Source' => array(
+                            xPDOTransport::PRESERVE_KEYS => false,
+                            xPDOTransport::UPDATE_OBJECT => false,
+                            xPDOTransport::UNIQUE_KEY => 'name',
+                        ),
+                    ),
                 ),
             ),
         ),
@@ -295,6 +326,23 @@ if (!is_array($TemplateVars)) {
     $modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($TemplateVars).' templateVars.');
 }
 
+/* Add subcategory modBlog_topic */
+$subcategories = array();
+print '<div style="margin: 0 0 0 50px"><h3>modBlog_Blog</h3>';
+    $subcategories[] = include $sources['build'].'categories/modBlog_Blog/index.php';
+print '</div>';
+
+print '<div style="margin: 0 0 0 50px"><h3>modBlog_Topic</h3>';
+    $subcategories[] = include $sources['build'].'categories/modBlog_Topic/index.php';
+print '</div>';
+
+
+if (!count($subcategories)) {
+    $modx->log(modX::LOG_LEVEL_ERROR,'Could not package in subcategories.');
+} else {
+    $category->addMany($subcategories, 'Children');
+    $modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($subcategories).' subcategories.');
+}
 
 /* Package in Category*/
 $vehicle = $builder->createVehicle($category,$attr);
