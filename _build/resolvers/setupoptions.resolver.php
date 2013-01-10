@@ -87,6 +87,21 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         $modx->log(xPDO::LOG_LEVEL_WARN, "Update context ". $ctx->get('key'));
         
         
+        $topics_context_key = $ctx->get('key').'-topics';
+        if(!$ctx_for_topics = $modx->getObject('modContext', $topics_context_key)){
+            $ctx_for_topics = $modx->newObject('modContext');
+            $ctx_for_topics->set('key', $topics_context_key);
+            if(!$ctx_for_topics->save()){
+                $modx->log(xPDO::LOG_LEVEL_ERROR, "Can not save context with key '{$topics_context_key}'");
+            }
+        }
+        
+        if(!$ctx_for_topics){
+            $modx->log(xPDO::LOG_LEVEL_ERROR, "Context with key '{$topics_context_key}' not exists");
+            return false;
+        }
+        
+        
         // Get Templates
         $tplNames = array(
             'BLOG_MainPage',
@@ -291,14 +306,6 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         
         // Check for context for topics
         if(empty($ctx->config['topics_context_key'])){
-            $topics_context_key = $ctx->get('key').'-topics';
-            if(!$ctx_for_topics = $modx->getObject('modContext', $topics_context_key)){
-                $ctx_for_topics = $modx->newObject('modContext');
-                $ctx_for_topics->set('key', $topics_context_key);
-                if(!$ctx_for_topics->save()){
-                    $modx->log(xPDO::LOG_LEVEL_ERROR, "Can not save context with key '{$topics_context_key}'");
-                }
-            }
             if($ctx_for_topics && !$ctx_for_topics->isNew()){
                 $setting = $modx->newObject('modContextSetting', array(
                     'xtype' => 'textfield',
@@ -383,22 +390,19 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         /* Update topics context */
         if($ctx_for_topics && !$ctx_for_topics->isNew() && $ctx_for_topics->prepare()){
             $settings = array();
-        
-            if(empty($ctx->config['site_start'])){
-                if($doc = $modx->getObject('modResource', array(
-                    'parent'    => 0,
-                    'alias'     => 'index',
-                    'context_key' => $ctx->get('key'),
-                ))){
+            
+            if(empty($ctx->config['friendly_urls'])){
                 $setting = $modx->newObject('modContextSetting', array(
-                        'xtype' => 'numberfield',
-                        'value' => $doc->get('id'),
-                        'area'  => 'site',
-                    ));
-                    $setting->set('key', 'site_start');
-                    $settings[] = $setting; 
-                }
+                    'xtype' => 'combo-boolean',
+                    'value' => '0',
+                    'area'  => 'site',
+                ));
+                $setting->set('key', 'friendly_urls');
+                $settings[] = $setting; 
             }
+            
+            $ctx_for_topics->addMany($settings);
+            $ctx_for_topics->save();
         }
         
         

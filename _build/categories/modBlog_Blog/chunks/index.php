@@ -39,10 +39,28 @@ $chunk->fromArray(array(
     'name' => 'BLOG_Widget_blogList_RowTpl',
     'description' => '',
     'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/modBlog_Blog/BLOG_Widget_blogList_RowTpl.tpl'),
-    'properties' => array(
-        'current'   => '',
-    ),
+    /*'properties' => array(
+        'current'   => array(
+            'name'  => 'current',
+            'desc'  => '',
+            "type" => "textfield",  
+            'options' => array(),
+        ),
+    ),*/
 ),'',true,true);
+
+$chunk->set('properties', array(
+    'current'   => array(
+            'name'  => 'current',
+            'desc'  => '',
+            "type" => "textfield",  
+            'options' => array(),
+            'value' => '',
+            'lexicon'   => '',
+            'area'      => '',
+     ),
+));
+
 $chunks[] = $chunk;
 
 return $chunks;
