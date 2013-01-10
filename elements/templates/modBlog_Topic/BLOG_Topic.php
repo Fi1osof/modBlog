@@ -3,8 +3,7 @@
 <h2>[[*pagetitle]]</h2>
 
 <div style="margin: 20px 0;">
-    <h3>О блоге</h3>
-    <div>[[*id]] [[!BLOG_topicsList]]</div>
+    <div>[[*content]]</div>
     
 </div>
 
