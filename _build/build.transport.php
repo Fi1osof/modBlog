@@ -1,6 +1,12 @@
 <?php
 
 
+
+$pkg_version = '1.1.0';
+$pkg_release = 'beta';
+define('PKG_VERSION', $pkg_version); 
+define('PKG_RELEASE', $pkg_release); 
+
 $mtime= microtime();
 $mtime= explode(" ", $mtime);
 $mtime= $mtime[1] + $mtime[0];
@@ -250,17 +256,22 @@ $attr = array(
             xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
                 'Snippets' => array(
                     xPDOTransport::PRESERVE_KEYS => false,
-                    xPDOTransport::UPDATE_OBJECT => true,
+                    xPDOTransport::UPDATE_OBJECT => false,
                     xPDOTransport::UNIQUE_KEY => 'name',
                 ),
                 'Chunks' => array(
                     xPDOTransport::PRESERVE_KEYS => false,
-                    xPDOTransport::UPDATE_OBJECT => true,
+                    xPDOTransport::UPDATE_OBJECT => false,
                     xPDOTransport::UNIQUE_KEY => 'name',
+                ),
+                'Templates' => array(
+                    xPDOTransport::PRESERVE_KEYS => false,
+                    xPDOTransport::UPDATE_OBJECT => false,
+                    xPDOTransport::UNIQUE_KEY => 'templatename',
                 ),
                 'TemplateVars' => array(
                     xPDOTransport::PRESERVE_KEYS => false,
-                    xPDOTransport::UPDATE_OBJECT => true,
+                    xPDOTransport::UPDATE_OBJECT => false,
                     xPDOTransport::UNIQUE_KEY => 'name',
                     xPDOTransport::RELATED_OBJECTS => true,
                     xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
@@ -406,7 +417,7 @@ $attributes = array(
 );
 
 /* add templates */
-include $sources['data'].'transport.templateVarTemplates.php';
+$modTemplateVarTemplates = include $sources['data'].'transport.templateVarTemplates.php';
 if (!is_array($modTemplateVarTemplates)) {
     $modx->log(modX::LOG_LEVEL_ERROR,'Could not package in modTemplateVarTemplates.');
 } else {

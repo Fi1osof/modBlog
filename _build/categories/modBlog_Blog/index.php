@@ -42,11 +42,23 @@ if (!is_array($tvs)) {
     $subcategory->addMany($tvs, 'TemplateVars');
     $modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($tvs).' templateVars.');
 }
-
-
 $TemplateVars = array_merge($TemplateVars, $tvs);
-
 unset($tvs);
+
+
+/* add templates */
+$templates  =  include "{$root}templates/index.php";
+if (!is_array($templates)) {
+    $modx->log(modX::LOG_LEVEL_ERROR,'Could not package in templates.');
+} else {
+    $Templates = array_merge($Templates, $templates);
+    $subcategory->addMany($templates,  'Templates');
+    $modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($templates).' templates.'); 
+}
+unset($templates);
+
+
+
 
 return $subcategory;
 

@@ -4,7 +4,7 @@
 
 <div style="margin: 20px 0;">
     <h3>О блоге</h3>
-    <div>[[*content]]</div>
+    <div>[[*id]] [[!BLOG_topicsList]]</div>
     
 </div>
 

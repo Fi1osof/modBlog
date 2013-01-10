@@ -24,6 +24,22 @@ $snippet->fromArray(array(
 // $snippet->setProperties($properties);
 $snippets[]  = $snippet;
 unset($snippet);
+
+
+
+$snippet= $modx->newObject('modSnippet');
+$snippet->fromArray(array(
+    'id' => 0,
+    'name' => 'BLOG_Widget_blogList',
+    'description' => '',
+    'snippet' => getSnippetContent($sources['source_core'].'/elements/snippets/modBlog_Blog/BLOG_Widget_blogList.php'),
+),'',true,true);
+$snippet->setProperties(array(
+    'outerTpl'  => 'BLOG_Widget_blogList_OuterTpl',
+    'rowTpl'    => 'BLOG_Widget_blogList_RowTpl',
+));
+$snippets[]  = $snippet;
+unset($snippet);
  
 
 return $snippets;

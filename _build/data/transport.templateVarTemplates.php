@@ -22,5 +22,10 @@ $tt->addOne($TemplateVars['BLOG_avatar'], 'TemplateVar');
 $modTemplateVarTemplates[] = $tt;
 
 
+$tt = $modx->newObject('modTemplateVarTemplate');
+$tt->addOne($Templates['BLOG_Topic'], 'Template');
+$tt->addOne($TemplateVars['Blog_tags'], 'TemplateVar');
+$modTemplateVarTemplates[] = $tt;
 
-// return $modTemplateVarTemplates;
+unset($tt);
+return $modTemplateVarTemplates;

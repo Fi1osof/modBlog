@@ -207,7 +207,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
                             'pagetitle' => 'Создать топик',
                             'alias'     => 'add',
                             'template'  => $tpl_BLOG_DEFAULT->get('id'),
-                            'content'   => '<p>[[*pagetitle]]</p>'
+                            'content'   => '[[!BLOG_topic_add]]',
                         ),
                     ),
                 ),
@@ -416,6 +416,23 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
                 'area'  => 'site',
             ));
             $setting->set('key', 'modblog.blog_default_template');
+            $setting->set('namespace', 'modblog');
+            $setting->set('value', $tpl->get('id'));
+            
+            $setting->save();
+        }
+        
+        
+        if(!$modx->getObject('modSystemSetting', array(
+            'key'   => 'modblog.topic_default_template'
+        )) && $tpl = $modx->getObject('modTemplate', array(
+            'templatename'  => 'BLOG_Topic',
+        ))){
+            $setting = $modx->newObject('modSystemSetting', array(
+                'xtype' => 'textfield',
+                'area'  => 'site',
+            ));
+            $setting->set('key', 'modblog.topic_default_template');
             $setting->set('namespace', 'modblog');
             $setting->set('value', $tpl->get('id'));
             
