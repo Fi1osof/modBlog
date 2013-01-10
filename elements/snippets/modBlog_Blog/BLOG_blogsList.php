@@ -14,7 +14,9 @@ $q->select(array(
     'CreatedBy.username'
 ));
 
-$docs = $modx->getCollection('modResource', $q);
+$q->sortby('publishedon', 'DESC');
+
+$docs = $modx->modblog->getBlogs($q);
 
 foreach($docs as $doc){ 
     $options = array(

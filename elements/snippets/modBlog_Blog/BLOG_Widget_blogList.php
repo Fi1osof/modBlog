@@ -21,8 +21,12 @@ if($blogs = $modx->modblog->getBlogs($q)){
     }
 }
 
-$output = $modx->getChunk($outerTpl, array(
-    'options'   =>  $options,
-));
+
+
+$output = $modx->getChunk($outerTpl, array_merge(
+    $scriptProperties, array(
+        'options'   =>  $options,
+    ))
+);
 
 return  $output;

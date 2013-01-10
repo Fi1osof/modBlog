@@ -1,1 +1,1 @@
-<option value="[[+id]]" [[+id:eq=[[+current]]:then=`selected="selected"` ]]>[[+title]]</option>
+<option value="[[+id]]" [[+id:eq=`[[+current]]`:then=`selected="selected"`:else=`` ]]>[[+title]]</option>

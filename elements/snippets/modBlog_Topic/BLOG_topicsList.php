@@ -2,19 +2,29 @@
 
 $output = ''; 
 
-$parent = $modx->getOption('blogs_folder');
+$q = $modx->newQuery('SocietyTopic');
+$q->innerJoin('SocietyBlogTopic', 'TopicBlogs');
+$q->innerJoin('SocietyBlog', 'Blog', 'TopicBlogs.blogid=Blog.id');
+$q->innerJoin('modUser', 'CreatedBy',  'SocietyTopic.createdby=CreatedBy.id');
 
-$q = $modx->newQuery('modResource', array(
-    'parent'    => $parent,
+$q->where(array(
+    'Blog.id' => $modx->resource->id,
+    'SocietyTopic.published' => true,
+    'SocietyTopic.deleted' => false,
+    'SocietyTopic.hidemenu' => false,
+    'Blog.published' => true,
+    'Blog.deleted' => false,
+    'Blog.hidemenu' => false,
 ));
-$q->innerJoin('modUser', 'CreatedBy');
 
 $q->select(array(
-    'modResource.*',
+    'SocietyTopic.*',
     'CreatedBy.username'
 ));
+ 
+$q->sortby('publishedon', 'DESC');
 
-$docs = $modx->getCollection('modResource', $q);
+$docs = $modx->getCollection('SocietyTopic', $q);
 
 foreach($docs as $doc){ 
     $options = array(

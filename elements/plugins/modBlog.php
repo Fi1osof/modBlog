@@ -32,16 +32,21 @@ switch($modx->event->name){
                 $modx->user = $user;
                 $modx->user->set('id', 0);
             }
+            else{
+                $modx->log(xPDO::LOG_LEVEL_ERROR, "Can not create default SocietyUser");
+            }
         }
+        
+        
         break;
     
     case 'OnPageNotFound':
-        print "OnPageNotFound";
-        exit;
-        
-        
-        // $modx->sendForward(1);
-        // exit;
+        // Router
+        if(empty($modx->resource)){
+            if(preg_match('/^\/topics\/([0-9]+)/', $_SERVER['REQUEST_URI'], $match)){
+                return $modx->modblog->showTopic($match[1]);
+            }
+        }
         break;
     default:;
 }

@@ -8,42 +8,34 @@
             
             <div class="field">
                 <label for="topic_blog" class="block">В какой блог публикуем?</label>
-                [[!BLOG_Widget_blogList]]
-                <div id="blogTypeDescription">
-                    <small class="note block" id="blog_type_note_open" ></small>
-                </div>
+                [[!BLOG_Widget_blogList?
+                    &tagname=`topic_blog`
+                    &tagid=`topic_blog`
+                    &tagclass=`input-width-200`
+                    &current=`[[+topic_blog]]`
+                ]]
+                <small class="note block" ></small>
             </div>
             
             
             <div class="field">
-                <label for="blog_title" class="block">Название блога:</label>
-                <input id="blog_title" class="input-text input-width-full" type="text" value="[[+blog_title]]" name="blog_title">
-                <small class="note block">Название блога должно быть наполнено смыслом, чтобы можно было понять, о чем будет блог.</small>
+                <label for="topic_title" class="block">Заголовок:</label>
+                <input id="topic_title" class="input-text input-width-full" type="text" value="[[+topic_title]]" name="topic_title">
+                <small class="note block">Заголовок должен быть наполнен смыслом, чтобы можно было понять, о чем будет топик.</small>
             </div>
-            
-            <div class="field">
-                <label for="blog_url" class="block">URL блога:</label>
-                <input id="blog_url" name="blog_url" value="[[+blog_url]]" class="input-text input-width-full" type="text">
-                <small class="note block">URL блога, по которому он будет доступен. Может содержать только буквы латинского алфавита, цифры, дефис; пробелы будут заменены на "_". По смыслу URL  должен совпадать с названием блога, после его создания редактирование этого параметра будет недоступно</small>
-            </div>
-            
             
             
             <div class="field">
-                <label for="blog_description" class="block">Описание блога:</label>
-                <textarea class="input-text input-width-full " rows="15" id="blog_description" name="blog_description">[[+blog_description]]</textarea>
+                <label for="topic_text" class="block">Текст:</label>
+                <textarea class="input-text input-width-full " rows="15" id="topic_text" name="topic_text">[[+topic_text]]</textarea>
             </div>
             
             <div class="field">
-                <label for="blog_limit_rating_topic" class="block">Ограничение по рейтингу:</label>
-                <input id="blog_limit_rating_topic" name="blog_limit_rating_topic" value="[[+blog_limit_rating_topic]]" class="input-text input-width-100" type="text">
-                <small class="note block">Рейтинг, который необходим пользователю, чтобы написать в этот блог</small>
+                <label for="topic_tags" class="block">Теги:</label>
+                <input id="topic_tags" name="topic_tags" value="[[+topic_tags]]" class="input-text input-width-full" type="text">
+                <small class="note block">Теги нужно разделять запятой. Например: google, вконтакте, кирпич</small>
             </div>
-            
-            <div class="field">		
-		<label for="avatar">Аватар:</label>
-		<input type="file" id="avatar" name="avatar">
-            </div>
+             
             
             <div class="field">		
                 <input type="submit" value="Сохранить" name="save_blog"/>
