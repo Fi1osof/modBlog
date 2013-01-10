@@ -58,16 +58,16 @@ class modBlogTopicCreateProcessor extends modBlogMgrTopicCreateProcessor{
     
     function setBlogs(){
         if(!$topic_blog = trim($this->getProperty('topic_blog'))){
-            // $this->addFieldError('topic_blog', 'Не указан блог');
-            return true;
+            $this->addFieldError('topic_blog', 'Не указан блог');
+            return false;
         }
-        
         if(!$this->blogs = $this->modx->modblog->getBlogs(array(
             'id:IN' => explode(",", $topic_blog),
             'published' => true,
             'deleted'   => false,
         ))){
-            return true;
+            $this->addFieldError('tags', 'Не был получен ни один блог');
+            return false;
         }
         
         $this->blogtopics = array();

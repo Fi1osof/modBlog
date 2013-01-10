@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Add new blog
  */
