@@ -16,7 +16,24 @@ if (is_array($permissions)) {
     $template->addMany($permissions);
 } else { $modx->log(modX::LOG_LEVEL_ERROR,'Could not load Blog Policy Template.'); }
 
- 
+$perms = array(
+    'add_children',
+    'list',
+    'moderate_blogs',
+    'new_document_in_root',
+    'publish_document',
+    'save',
+    'view',
+);
+
+$data = array();
+
+foreach($perms as $k){
+    $data = array(
+        $k => true,
+    );
+}
+
 /*
  * Add policies
  */
@@ -31,9 +48,7 @@ $policy->fromArray(array (
   'parent' => 0,
   'class' => '',
   'lexicon' =>'modblog:permissions',
-  'data' => array(
-      'moderate_blogs' => true,
-  ),
+  'data' => $data,
 ), '', true, true);
 $policies[] = $policy;
 
@@ -47,9 +62,21 @@ $policy->fromArray(array (
   'parent' => 0,
   'class' => '',
   'lexicon' =>'modblog:permissions',
-  'data' => array(
-      'moderate_blogs' => true,
-  ),
+  'data' => $data,
+), '', true, true);
+$policies[] = $policy;
+
+
+// Moderator
+$policy = $modx->newObject('modAccessPolicy');
+$policy->fromArray(array (
+  'id' => 1,
+  'name' => 'Blog Member',
+  'description' => 'Политики доступов пользователей Блога',
+  'parent' => 0,
+  'class' => '',
+  'lexicon' =>'modblog:permissions',
+  'data' => $data,
 ), '', true, true);
 $policies[] = $policy;
 

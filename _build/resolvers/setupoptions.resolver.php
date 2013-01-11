@@ -427,9 +427,9 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
                 'modUserGroup' => 'Blog Moderators',
                 'modUserGroupRole'  => 'Blog Moderator'
             ),
-            'Load, List and View' => array(
+            'Blog Member' => array(
                 'modUserGroup' => 'Blog Members',
-                'modUserGroupRole'  => 'Member'
+                'modUserGroupRole'  => 'Blog Member'
             ),
         );
 

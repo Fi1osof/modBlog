@@ -21,6 +21,13 @@ $role = $modx->newObject('modUserGroupRole', array(
 ));
 $roles[] = $role;
 
+$role = $modx->newObject('modUserGroupRole', array(
+    'name'          => 'Blog Member',
+    'description'   => 'Blog Member role',
+    'authority'     => 5000
+));
+$roles[] = $role;
+
 return $roles;
 
 ?>
