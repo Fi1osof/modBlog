@@ -1,10 +1,15 @@
 modBlog-1.1.0-beta
 =============================================================
--   Added subCategory modBlog_Blog
--   Added subCategory modBlog_Topic
+- Added modBlog class extends modSociety class
+- Added subCategory modBlog_Blog
+- Added subCategory modBlog_Topic
+- Added subCategory modBlog_Profile
+- Added create Blog
+- Added create Topic
+- Added list topics
+- Added default policies for Blog Members, Blog Moderators and Blog Administrators
 
 
 modBlog-1.0.0-beta
 =============================================================
-
 First release
