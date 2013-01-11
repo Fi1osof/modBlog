@@ -26,12 +26,8 @@ class modBlogTopicCreateProcessor extends modBlogMgrTopicCreateProcessor{
         // Проверяем блог
         $this->setBlogs();
         
-        
-        /*$alias = $this->getProperty('alias');
-        $len = strlen($alias);
-        if($len < 2 || $len > 50){
-            $this->addFieldError('alias', "URL блога должен быть от 2 до 50 символов");
-        }*/
+        $content = $this->getProperty('content');
+        $this->setProperty('content', preg_replace('/\t/', '<br />',  $content));
         
         $this->setProperty('template', 
                 $this->modx->getOption('modblog.topic_default_template', null, 
