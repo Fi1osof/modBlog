@@ -43,9 +43,27 @@ switch($modx->event->name){
     case 'OnPageNotFound':
         // Router
         if(empty($modx->resource)){
-            if(preg_match('/^\/topics\/([0-9]+)/', $_SERVER['REQUEST_URI'], $match)){
+            /*
+             * Topics
+             */
+            if(preg_match('/^\/topics\/([0-9]+)\/$/', $_SERVER['REQUEST_URI'], $match)){
                 return $modx->modblog->showTopic($match[1]);
             }
+            
+            /*
+             * Profile
+             */
+            if(preg_match('/^\/profile\/([^\/]+?)\/$/', $_SERVER['REQUEST_URI'], $match)){
+                return $modx->modblog->showProfile(urldecode($match[1]));
+            }
+            
+            /*
+             * Profile Topics
+             */
+            if(preg_match('/^\/profile\/([^\/]+?)\/created\/topics\//', $_SERVER['REQUEST_URI'], $match)){
+                return $modx->modblog->showProfileTopics(urldecode($match[1]));
+            }
+            
         }
         break;
     default:;
