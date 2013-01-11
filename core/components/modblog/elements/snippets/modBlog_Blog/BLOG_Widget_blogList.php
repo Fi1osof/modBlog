@@ -3,13 +3,17 @@
 $output = '';
 $options = '';
 
-
 $q = $modx->newQuery('SocietyBlog');
 $q->select(array(
     'SocietyBlog.id',
     'SocietyBlog.pagetitle'
 ));
 $q->sortby('pagetitle');
+
+$options .= $modx->getChunk($rowTpl, array(
+    'id'    => 0,
+    'title' => 'Мой персональный блог',
+));
 
 if($blogs = $modx->modblog->getBlogs($q)){
     foreach($blogs as $blog){
@@ -20,8 +24,6 @@ if($blogs = $modx->modblog->getBlogs($q)){
         $options .= $modx->getChunk($rowTpl, $params);
     }
 }
-
-
 
 $output = $modx->getChunk($outerTpl, array_merge(
     $scriptProperties, array(

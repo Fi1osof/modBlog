@@ -27,14 +27,14 @@ class modBlogMgrTopicCreateProcessor extends modResourceCreateProcessor{
         $content = $this->getProperty('content');
         $len = strlen($content);
         if($len < 50 || $len > 30000){
-            $this->addFieldError('ta', "Текст описания блога должен быть от 50 до 30000 символов");
+            $this->addFieldError('ta', "Текст топика должен быть от 50 до 30000 символов");
         }
         
         // Проверяем уникальностье текста
         if($content && $this->modx->getObject('SocietyTopicAttributes', array(
             'content_hash'  => md5($content),
         ))){
-            $this->addFieldError('ta', "Текст описания блога не уникальный");
+            $this->addFieldError('ta', "Текст топика не уникальный");
         }
         
         if($this->hasErrors()){

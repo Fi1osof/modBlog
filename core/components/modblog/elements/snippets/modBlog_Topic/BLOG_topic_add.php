@@ -24,6 +24,7 @@ foreach($TVsAliases as $a => $f){
 
 
 $options = array(
+    'topic_blog'    => '',  
     // 'blog_limit_rating_topic'   => $BLOG_blogMinRating->get('default_text'),
 );
 
@@ -68,8 +69,9 @@ if(!empty($_POST['save_blog'])){
     }
     else{
         $object = $response->getObject();
-        $url = $modx->getOption('base_url'). 'topics/'.$object['id'];
-        $modx->sendRedirect($url);
+        if($topic  = $modx->modblog->getTopic($object['id'])){
+            $modx->sendRedirect($topic->makeUrl());
+        }
     }
 }
 
