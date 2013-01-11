@@ -29,9 +29,7 @@ $perms = array(
 $data = array();
 
 foreach($perms as $k){
-    $data = array(
-        $k => true,
-    );
+    $data[$k] = true;
 }
 
 /*

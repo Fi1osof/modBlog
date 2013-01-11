@@ -188,15 +188,9 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
                         ),
                         array(
                             'pagetitle' => 'Нет доступа',
-                            'alias'     => '403',
-                            'template'  => $tpl_BLOG_DEFAULT->get('id'),
-                            'content'   => '<h2>У вас нет доступа к этой странице.</h2>',
-                        ),
-                        array(
-                            'pagetitle' => 'Пожалуйста, авторизуйтесь',
                             'alias'     => '401',
                             'template'  => $tpl_BLOG_DEFAULT->get('id'),
-                            'content'   => '<h2>Пожалуйста, авторизуйтесь.</h2>',
+                            'content'   => '<h2>У вас нет доступа к этой странице.</h2>',
                         ),
                     ),
                 ),
@@ -233,6 +227,8 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
                     'alias'     => 'profile',
                     'template'  => $tpl_BLOG_Profile->get('id'),
                     'published' => true,
+                    'searchable'    => true,
+                    'content'       => '[[!BLOG_profile_info]]',
                     'childs'   => array(
                         array(
                             'pagetitle' => 'Публикации',
@@ -246,7 +242,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
                                     'alias'     => 'topics',
                                     'template'  => $tpl_BLOG_Profile->get('id'),
                                     'content'   => '[[!BLOG_profile_topicsList]]',
-                                    'published' => false,
+                                    'searchable'    => true,
                                 ),
                             ),
                         ),
@@ -272,6 +268,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
                     'alias'     => 'blogs',
                     'template'  => $tpl_BLOG_DEFAULT->get('id'),
                     'published' => true,
+                    'searchable'    => true,
                 ),
             )
         );
@@ -300,7 +297,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         /* Set context options */
         $settings = array();
         
-        if(empty($ctx->config['site_start'])){
+        if(!isset($ctx->config['site_start'])){
             if($doc = $modx->getObject('modResource', array(
                 'parent'    => 0,
                 'alias'     => 'index',
@@ -316,7 +313,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
             }
         }
         
-        if(empty($ctx->config['error_page'])){
+        if(!isset($ctx->config['error_page'])){
             if($doc = $modx->getObject('modResource', array(
                 'alias'     => '404',
                 'context_key' => $ctx->get('key'),
@@ -331,8 +328,24 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
             }
         }
         
+        
+        if(!isset($ctx->config['unauthorized_page'])){
+            if($doc = $modx->getObject('modResource', array(
+                'alias'     => '401',
+                'context_key' => $ctx->get('key'),
+            ))){
+               $setting = $modx->newObject('modContextSetting', array(
+                    'xtype' => 'numberfield',
+                    'value' => $doc->get('id'),
+                    'area'  => 'site',
+                ));
+                $setting->set('key', 'unauthorized_page');
+                $settings[] = $setting; 
+            }
+        }
+        
         // Check for context for topics
-        if(empty($ctx->config['topics_context_key'])){
+        if(!isset($ctx->config['topics_context_key'])){
             if($ctx_for_topics && !$ctx_for_topics->isNew()){
                 $setting = $modx->newObject('modContextSetting', array(
                     'xtype' => 'textfield',
@@ -348,7 +361,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         /*
          * Root folder for blogs
          */
-        if(empty($ctx->config['blogs_folder'])){
+        if(!isset($ctx->config['blogs_folder'])){
             if($doc = $modx->getObject('modResource', array(
                 'parent'    => 0,
                 'alias'     => 'blogs',
@@ -368,7 +381,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         /*
          * Resource for show profile info
          */
-        if(empty($ctx->config['profile_resource'])){
+        if(!isset($ctx->config['profile_resource'])){
             if($doc = $modx->getObject('modResource', array(
                 'parent'    => 0,
                 'alias'     => 'profile',
@@ -387,10 +400,10 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         /*
          * Resource for list profile topics
          */
-        if(empty($ctx->config['profile_topics_resource'])){
+        if(!isset($ctx->config['profile_topics_resource'])){
             if($doc = $modx->getObject('modResource', array(
                 'alias'     => 'topics',
-                'templte'   => $tpl_BLOG_Profile->get('id'),
+                'template'   => $tpl_BLOG_Profile->get('id'),
                 'context_key' => $ctx->get('key'),
             ))){
                 $setting = $modx->newObject('modContextSetting', array(
@@ -460,7 +473,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         if($ctx_for_topics && !$ctx_for_topics->isNew() && $ctx_for_topics->prepare()){
             $settings = array();
             
-            if(empty($ctx->config['friendly_urls'])){
+            if(!isset($ctx_for_topics->config['friendly_urls'])){
                 $setting = $modx->newObject('modContextSetting', array(
                     'xtype' => 'combo-boolean',
                     'value' => '0',
