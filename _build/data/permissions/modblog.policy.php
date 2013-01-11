@@ -16,6 +16,12 @@ $permissions[] = $modx->newObject('modAccessPermission',array(
 )); 
 
 $permissions[] = $modx->newObject('modAccessPermission',array(
+    'name' => 'load',
+    'description' => 'Возможность «загружать» объекты.',
+    'value' => true,
+)); 
+
+$permissions[] = $modx->newObject('modAccessPermission',array(
     'name' => 'moderate_blogs',
     'description' => 'perm.moderate_blogs_desc',
     'value' => true,

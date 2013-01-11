@@ -19,6 +19,7 @@ if (is_array($permissions)) {
 $perms = array(
     'add_children',
     'list',
+    'load',
     'moderate_blogs',
     'new_document_in_root',
     'publish_document',
