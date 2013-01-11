@@ -25,6 +25,9 @@ class modBlogBlogCreateProcessor extends modBlogMgrBlogCreateProcessor{
             $this->addFieldError('alias', "URL блога должен быть от 2 до 50 символов");
         }
         
+        $content = $this->getProperty('content');
+        $this->setProperty('content', preg_replace('/\t/', '<br />',  $content));
+        
         $this->setProperty('template', 
                 $this->modx->getOption('modblog.blog_default_template', null, 
                         $this->modx->getOption('default_template'))
