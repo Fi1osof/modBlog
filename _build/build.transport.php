@@ -347,6 +347,10 @@ print '<div style="margin: 0 0 0 50px"><h3>modBlog_Topic</h3>';
     $subcategories[] = include $sources['build'].'categories/modBlog_Topic/index.php';
 print '</div>';
 
+print '<div style="margin: 0 0 0 50px"><h3>modBlog_Profile</h3>';
+    $subcategories[] = include $sources['build'].'categories/modBlog_Profile/index.php';
+print '</div>';
+
 
 if (!count($subcategories)) {
     $modx->log(modX::LOG_LEVEL_ERROR,'Could not package in subcategories.');

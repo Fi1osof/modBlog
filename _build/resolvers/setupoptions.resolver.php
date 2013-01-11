@@ -106,6 +106,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         $tplNames = array(
             'BLOG_MainPage',
             'BLOG_DEFAULT',
+            'BLOG_Profile',
         );
         $tplVarPrefix = "tpl_";
         foreach($tplNames as $tplName){
@@ -122,15 +123,16 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
          */
         function _create_docs(&$modx, $context_key, $node, $doc = null){
             $base_params = array(
-                'update'    => true,    // if set True, document will be updated
-                'published' => true,
-                'hidemenu'  => false,
-                'deleted'   => false,
-                'isfolder'  => true,
+                'update'        => false,    // if set True, document will be updated
+                'published'     => true,
+                'hidemenu'      => false,
+                'deleted'       => false,
+                'isfolder'      => true,
                 'searchable'    => false,
+                'richtext'      => false,
                 'context_key'   => $context_key,
                 'class_key'     => 'modDocument',
-                'cacheable'     => false,
+                'cacheable'     => true,
             );
             if(isset($node['childs'])){
                 $menuindex = 0;
@@ -227,6 +229,31 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
                     ),
                 ),
                 array(
+                    'pagetitle' => 'Профиль',
+                    'alias'     => 'profile',
+                    'template'  => $tpl_BLOG_Profile->get('id'),
+                    'published' => true,
+                    'childs'   => array(
+                        array(
+                            'pagetitle' => 'Публикации',
+                            'alias'     => 'created',
+                            'template'  => 0,
+                            'content'   => '',
+                            'published' => false,
+                            'childs'   => array(
+                                array(
+                                    'pagetitle' => 'Топики',
+                                    'alias'     => 'topics',
+                                    'template'  => $tpl_BLOG_Profile->get('id'),
+                                    'content'   => '[[!BLOG_profile_topicsList]]',
+                                    'published' => false,
+                                ),
+                            ),
+                        ),
+                    ),
+                    
+                ),
+                array(
                     'pagetitle' => 'Сообщения',
                     'alias'     => 'talk',
                     'template'  => $tpl_BLOG_DEFAULT->get('id'),
@@ -318,9 +345,12 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         }
         
         
-        
+        /*
+         * Root folder for blogs
+         */
         if(empty($ctx->config['blogs_folder'])){
             if($doc = $modx->getObject('modResource', array(
+                'parent'    => 0,
                 'alias'     => 'blogs',
                 'context_key' => $ctx->get('key'),
             ))){
@@ -330,6 +360,45 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
                     'area'  => 'site',
                 ));
                 $setting->set('key', 'blogs_folder');
+                $settings[] = $setting; 
+            }
+        }
+        
+        
+        /*
+         * Resource for show profile info
+         */
+        if(empty($ctx->config['profile_resource'])){
+            if($doc = $modx->getObject('modResource', array(
+                'parent'    => 0,
+                'alias'     => 'profile',
+                'context_key' => $ctx->get('key'),
+            ))){
+                $setting = $modx->newObject('modContextSetting', array(
+                    'xtype' => 'numberfield',
+                    'value' => $doc->get('id'),
+                    'area'  => 'site',
+                ));
+                $setting->set('key', 'profile_resource');
+                $settings[] = $setting; 
+            }
+        }
+        
+        /*
+         * Resource for list profile topics
+         */
+        if(empty($ctx->config['profile_topics_resource'])){
+            if($doc = $modx->getObject('modResource', array(
+                'alias'     => 'topics',
+                'templte'   => $tpl_BLOG_Profile->get('id'),
+                'context_key' => $ctx->get('key'),
+            ))){
+                $setting = $modx->newObject('modContextSetting', array(
+                    'xtype' => 'numberfield',
+                    'value' => $doc->get('id'),
+                    'area'  => 'site',
+                ));
+                $setting->set('key', 'profile_topics_resource');
                 $settings[] = $setting; 
             }
         }
