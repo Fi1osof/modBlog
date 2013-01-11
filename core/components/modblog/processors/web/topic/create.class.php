@@ -27,7 +27,7 @@ class modBlogTopicCreateProcessor extends modBlogMgrTopicCreateProcessor{
         $this->setBlogs();
         
         $content = $this->getProperty('content');
-        $this->setProperty('content', preg_replace('/\t/', '<br />',  $content));
+        $this->setProperty('content', preg_replace('/\n/', '<br />',  $content));
         
         $this->setProperty('template', 
                 $this->modx->getOption('modblog.topic_default_template', null, 
